@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
     [Header("Move Settings")]
     [SerializeField] private float baseSpeed = 4.3f;
     [SerializeField] private float sprintMultiplier  = 1f;
+    [SerializeField] private float crouchMultiplier  = 0.5f;
+    [SerializeField] private float animationDamping = 0.12f;
 
     [Header("Ground Settings")]
     [SerializeField] private float groundDistance = 0.3f;
@@ -21,7 +23,7 @@ public class Movement : MonoBehaviour
 
     private Vector2 input;
     private bool isGrounded;
-    private bool sprintHeld;
+    private bool isCrouching;
 
     private void Start()
     {
@@ -44,6 +46,7 @@ public class Movement : MonoBehaviour
     }
     public void OnSprint(InputValue value)
     {
+        if (isCrouching) return;
         if (value.isPressed)
         {
             sprintMultiplier  = 2.5f;
@@ -72,10 +75,13 @@ public class Movement : MonoBehaviour
     public void OnCrouch(InputValue value)
     {
         if(value.isPressed) Debug.Log("Crouch button was pressed.");
+        if (!value.isPressed) return;
+        isCrouching = !isCrouching;
     }
 
     private void Move()
     {
+        float movementMultiplier = isCrouching ? crouchMultiplier : 1f;
         Vector3 forward = playerBody.forward;
         Vector3 right = playerBody.right;
 
@@ -90,7 +96,7 @@ public class Movement : MonoBehaviour
             right * input.x;
 
         float targetSpeed =
-            baseSpeed * sprintMultiplier;
+            baseSpeed * sprintMultiplier * movementMultiplier;
 
         Vector3 targetVelocity =
             direction * targetSpeed;
@@ -128,6 +134,7 @@ public class Movement : MonoBehaviour
 
     private void UpdateAnimator()
     {
+
         Vector3 horizontalVelocity = new Vector3(
             rb.linearVelocity.x, 
             0f, 
@@ -136,6 +143,9 @@ public class Movement : MonoBehaviour
 
         float speed = horizontalVelocity.magnitude;
 
-        animator.SetFloat("Speed", speed, 0.1f, Time.deltaTime);
+        animator.SetFloat("Speed", speed, animationDamping, Time.deltaTime);
+        animator.SetBool("Grounded", isGrounded);
+        animator.SetBool("IsCrouching", isCrouching);
+        Debug.Log(speed);
     }
 }
