@@ -1,3 +1,4 @@
+using Assets.Scripts.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,13 +12,13 @@ public class Movement : MonoBehaviour
 
     [Header("Move Settings")]
     [SerializeField] private float baseSpeed = 4.3f;
-    [SerializeField] private float sprintMultiplier  = 1f;
-    [SerializeField] private float crouchMultiplier  = 0.5f;
+    [SerializeField] private float sprintMultiplier  = 0.7f;
+    [SerializeField] private float crouchMultiplier  = 0.25f;
     [SerializeField] private float animationDamping = 0.12f;
 
     [Header("Ground Settings")]
     [SerializeField] private float groundDistance = 0.3f;
-    [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float jumpForce = 4f;
 
     [SerializeField] private LayerMask groundLayer;
 
@@ -39,7 +40,9 @@ public class Movement : MonoBehaviour
     {
         Move();
     }
-
+    // ==============================================================
+    // ==============================================================
+    // ==============================================================
     public void OnMove(InputValue value)
     {
         input = value.Get<Vector2>();
@@ -79,6 +82,9 @@ public class Movement : MonoBehaviour
         isCrouching = !isCrouching;
     }
 
+    // ==============================================================
+    // ==============================================================
+    // ==============================================================
     private void Move()
     {
         float movementMultiplier = isCrouching ? crouchMultiplier : 1f;
@@ -146,6 +152,6 @@ public class Movement : MonoBehaviour
         animator.SetFloat("Speed", speed, animationDamping, Time.deltaTime);
         animator.SetBool("Grounded", isGrounded);
         animator.SetBool("IsCrouching", isCrouching);
-        Debug.Log(speed);
+        // Debug.Log(speed);
     }
 }

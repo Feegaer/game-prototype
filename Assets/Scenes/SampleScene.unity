@@ -176,9 +176,9 @@ MonoBehaviour:
   groundCheck: {fileID: 265806145}
   animator: {fileID: 829016341}
   baseSpeed: 4.3
-  sprintMultiplier: 1
-  crouchMultiplier: 0.5
-  animationDamping: 0.12
+  sprintMultiplier: 0.3
+  crouchMultiplier: 0.1
+  animationDamping: 0.09
   groundDistance: 0.3
   jumpForce: 5
   groundLayer:
@@ -295,6 +295,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   playerCamera: {fileID: 276347783}
   interactionDistance: 2
+  interactionLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &265806144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,12 +1174,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.054
+      value: 1.289
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1214,6 +1229,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: INT_Key_01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1224,6 +1243,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1945714297}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1945714302}
   m_SourcePrefab: {fileID: 100100000, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
 --- !u!1 &1945714296 stripped
 GameObject:
@@ -1279,6 +1301,18 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 3228965558982408429, guid: e2dc4b816f4544d4589f67f9debe1ac6, type: 3}
+--- !u!114 &1945714302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945714296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b6835093c6a504d9f0c26fa67a2b87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PickupObject
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
