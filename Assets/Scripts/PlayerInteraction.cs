@@ -1,4 +1,5 @@
 using Assets.Scripts.Interfaces;
+using Assets.Scripts.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerInteraction : MonoBehaviour
@@ -6,6 +7,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Camera     playerCamera;
     [SerializeField] private float      interactionDistance = 2f;
     [SerializeField] private LayerMask  interactionLayer;
+    [SerializeField] InteractionPromptUI interactionPromptUI;
 
     private IInteractable currentInteractable;
     void Awake()
@@ -46,12 +48,17 @@ public class PlayerInteraction : MonoBehaviour
             //Debug.Log($"Hit object: {hit.collider.gameObject.name}");
             //Debug.Log($"Interactable: {currentInteractable}");
             currentInteractable = hit.collider.GetComponent<IInteractable>();
+            interactionPromptUI.Show(currentInteractable.InteractionPrompt);
             // Debug.Log("Interactive Object was hitted");
         }
         else
         {
             Debug.DrawRay(cameraCurrentPosition, cameraForwardViewPosition * interactionDistance, Color.white);
-            currentInteractable = null;
+            if(currentInteractable != null)
+            {
+                interactionPromptUI.Hide();
+                currentInteractable = null;
+            }
             // Debug.Log("Interactive Object was not hitted");
         }
     }

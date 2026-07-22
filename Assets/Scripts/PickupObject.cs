@@ -8,4 +8,6 @@ public class PickupObject : MonoBehaviour, IInteractable
         Debug.Log($"Picked up: {gameObject.name}");
         Destroy(gameObject);
     }
+
+    public string InteractionPrompt => $"Press [E] to pick up: {gameObject.name}";
 }
