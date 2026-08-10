@@ -3,11 +3,14 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class OpenDoor : MonoBehaviour, IInteractable
+    public class OpenDoor : MonoBehaviour, IInteractable, ILockable
     {
         [SerializeField] private float openAngle = 90f;
         [SerializeField] private float openSpeed = 2f;
-        private bool isOpen = false;
+        [SerializeField] private bool isLocked = false;
+        [SerializeField] private bool isOpen = false;
+        [SerializeField] private ItemType requiredItem;
+
         public void Interact()
         {
             isOpen = !isOpen;
@@ -24,5 +27,9 @@ namespace Assets.Scripts
             }
         }
         public string InteractionPrompt => "Press [E] to open door.";
+        public bool IsLocked => isLocked;
+        public ItemType RequiredItem => requiredItem;
+        public bool CanUnlock(ItemType item) => item == requiredItem;
+        public void Unlock() => isLocked = false;
     }
 }

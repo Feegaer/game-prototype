@@ -1,3 +1,4 @@
+using Assets.Scripts;
 using Assets.Scripts.Interfaces;
 using Assets.Scripts.UI;
 using UnityEngine;
@@ -7,9 +8,11 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Camera     playerCamera;
     [SerializeField] private float      interactionDistance = 2f;
     [SerializeField] private LayerMask  interactionLayer;
-    [SerializeField] InteractionPromptUI interactionPromptUI;
+    [SerializeField] private InteractionPromptUI interactionPromptUI;
+    [SerializeField] private PlayerInventory inventory;
 
     private IInteractable currentInteractable;
+
     void Awake()
     {
         interactionLayer = LayerMask.GetMask("Interactive Object");
@@ -26,11 +29,35 @@ public class PlayerInteraction : MonoBehaviour
     public void OnInteract(InputValue value)
     {
         if (!value.isPressed) return;
-        if (value.isPressed)
+        
+        Debug.Log("Interact button was pressed.");
+        
+        if (currentInteractable != null)
         {
-            Debug.Log("Interact button was pressed.");
-            if(currentInteractable != null) currentInteractable?.Interact();
-            
+            if (currentInteractable is IPickUp item)
+            {
+                if (!inventory.AddItem(item.ItemType))
+                    return;
+            }
+
+            if(currentInteractable is ILockable lockable)
+            {
+                if(lockable.IsLocked)
+                {
+                    if(inventory.HasItem(lockable.RequiredItem))
+                    {
+                        lockable.Unlock();
+                    }
+                    else
+                    {
+                        Debug.Log("You don't have the required item to unlock this object.");
+                        return;
+                    }
+                }
+            }
+
+
+            currentInteractable.Interact();
         }
     }
     /// <summary>
